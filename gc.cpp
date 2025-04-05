@@ -1,61 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_BLOCKS 10  // Nombre maximum de blocs de mÈmoire
-#define BLOCK_SIZE 5   // Taille de chaque bloc en ÈlÈments
+#define MAX_BLOCKS 10   
+#define BLOCK_SIZE 5  
 
-// Structure pour reprÈsenter un bloc de mÈmoire
+// Structure pour repr√©senter un bloc de m√©moire
 typedef struct Block {
-    int in_use;    // Marqueur : 1 si utilisÈ, 0 si inutilisÈ
-    int* data;     // Pointeur vers la zone mÈmoire allouÈe
+    int in_use;    // Marqueur : 1 si utilis√©, 0 si inutilis√©
+    int* data;     // Pointeur vers la zone m√©moire allou√©e
 } Block;
 
-// Fonction d'allocation de mÈmoire pour un bloc
+// Fonction d'allocation de m√©moire pour un bloc
 void allocateBlock(Block* block) {
     block->data = (int*)malloc(BLOCK_SIZE * sizeof(int));
     if (block->data != NULL) {
-        block->in_use = 1;  // Marquer le bloc comme utilisÈ
-        printf("Bloc allouÈ.\n");
+        block->in_use = 1;  // Marquer le bloc comme utilis√©
+        printf("Bloc allou√©.\n");
     } else {
-        printf("…chec de l'allocation de mÈmoire.\n");
+        printf("√âchec de l'allocation de m√©moire.\n");
     }
 }
 
-// Fonction pour libÈrer la mÈmoire d'un bloc
+// Fonction pour lib√©rer la m√©moire d'un bloc
 void freeBlock(Block* block) {
     if (block->data != NULL) {
-        free(block->data);   // LibËre la mÈmoire allouÈe
+        free(block->data);   // Lib√®re la m√©moire allou√©e
         block->data = NULL;
-        block->in_use = 0;    // Marque le bloc comme inutilisÈ
-        printf("Bloc libÈrÈ.\n");
+        block->in_use = 0;    // Marque le bloc comme inutilis√©
+        printf("Bloc lib√©r√©.\n");
     }
 }
 
-// Fonction de compactage (dÈplace les blocs utilisÈs vers le dÈbut)
+// Fonction de compactage (d√©place les blocs utilis√©s vers le d√©but)
 void compactMemory(Block blocks[], int size) {
     int currentIndex = 0;  // Indice de la prochaine position pour un bloc actif
 
-    printf("Compactage de la mÈmoire...\n");
+    printf("Compactage de la m√©moire...\n");
 
     for (int i = 0; i < size; i++) {
         if (blocks[i].in_use) {
-            // Si le bloc est utilisÈ, on le dÈplace vers le dÈbut
+            // Si le bloc est utilis√©, on le d√©place vers le d√©but
             if (i != currentIndex) {
-                blocks[currentIndex].data = blocks[i].data;  // DÈplacer le bloc
+                blocks[currentIndex].data = blocks[i].data;  // D√©placer le bloc
                 blocks[currentIndex].in_use = 1;
-                blocks[i].data = NULL;  // RÈinitialiser l'ancien emplacement
+                blocks[i].data = NULL;  // R√©initialiser l'ancien emplacement
                 blocks[i].in_use = 0;
             }
-            currentIndex++;  // Passer ‡ l'emplacement suivant
+            currentIndex++;  // Passer √† l'emplacement suivant
         }
     }
 
-    // LibÈrer les blocs inutilisÈs restants
+    // Lib√©rer les blocs inutilis√©s restants
     for (int i = currentIndex; i < size; i++) {
         freeBlock(&blocks[i]);
     }
 
-    printf("Compactage terminÈ. La mÈmoire a ÈtÈ libÈrÈe.\n");
+    printf("Compactage termin√©. La m√©moire a √©t√© lib√©r√©e.\n");
 }
 
 // Fonction principale pour tester le garbage collector
@@ -68,27 +68,27 @@ int main() {
     allocateBlock(&blocks[4]);
     allocateBlock(&blocks[7]);
 
-    // Modification de l'Ètat des blocs
-    printf("Modification de l'Ètat des blocs...\n");
-    blocks[2].in_use = 0;  // Marquer le bloc 2 comme inutilisÈ
-    blocks[7].in_use = 0;  // Marquer le bloc 7 comme inutilisÈ
+    // Modification de l'√©tat des blocs
+    printf("Modification de l'√©tat des blocs...\n");
+    blocks[2].in_use = 0;  // Marquer le bloc 2 comme inutilis√©
+    blocks[7].in_use = 0;  // Marquer le bloc 7 comme inutilis√©
 
     // Affichage avant compactage
     printf("Avant compactage:\n");
     for (int i = 0; i < MAX_BLOCKS; i++) {
-        printf("Bloc %d: %s\n", i, blocks[i].in_use ? "utilisÈ" : "inutilisÈ");
+        printf("Bloc %d: %s\n", i, blocks[i].in_use ? "utilis√©" : "inutilis√©");
     }
 
     // Lancer le garbage collector (compaction)
     compactMemory(blocks, MAX_BLOCKS);
 
-    // Affichage aprËs compactage
-    printf("\nAprËs compactage:\n");
+    // Affichage apr√®s compactage
+    printf("\nApr√®s compactage:\n");
     for (int i = 0; i < MAX_BLOCKS; i++) {
-        printf("Bloc %d: %s\n", i, blocks[i].in_use ? "utilisÈ" : "inutilisÈ");
+        printf("Bloc %d: %s\n", i, blocks[i].in_use ? "utilis√©" : "inutilis√©");
     }
 
-    // LibÈrer la mÈmoire pour les blocs restants
+    // Lib√©rer la m√©moire pour les blocs restants
     for (int i = 0; i < MAX_BLOCKS; i++) {
         freeBlock(&blocks[i]);
     }
