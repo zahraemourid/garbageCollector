@@ -24,9 +24,9 @@ void allocateBlock(Block* block) {
 // Fonction pour libérer la mémoire d'un bloc
 void freeBlock(Block* block) {
     if (block->data != NULL) {
-        free(block->data);   // Libère la mémoire allouée
+        free(block->data);    
         block->data = NULL;
-        block->in_use = 0;    // Marque le bloc comme inutilisé
+        block->in_use = 0;     
         printf("Bloc libéré.\n");
     }
 }
