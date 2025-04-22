@@ -4,7 +4,6 @@
 #define MAX_BLOCKS 10   
 #define BLOCK_SIZE 5  
 
-// Structure pour représenter un bloc de mémoire
 typedef struct Block {
     int in_use;     
     int* data;      
