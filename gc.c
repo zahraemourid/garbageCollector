@@ -6,8 +6,8 @@
 
 // Structure pour représenter un bloc de mémoire
 typedef struct Block {
-    int in_use;    // Marqueur : 1 si utilisé, 0 si inutilisé
-    int* data;     // Pointeur vers la zone mémoire allouée
+    int in_use;     
+    int* data;      
 } Block;
 
 // Fonction d'allocation de mémoire pour un bloc
@@ -39,7 +39,6 @@ void compactMemory(Block blocks[], int size) {
 
     for (int i = 0; i < size; i++) {
         if (blocks[i].in_use) {
-            // Si le bloc est utilisé, on le déplace vers le début
             if (i != currentIndex) {
                 blocks[currentIndex].data = blocks[i].data;  // Déplacer le bloc
                 blocks[currentIndex].in_use = 1;
