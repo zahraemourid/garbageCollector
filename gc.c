@@ -30,6 +30,7 @@ void freeBlock(Block* block) {
     }
 }
 
+
 // Fonction de compactage (déplace les blocs utilisés vers le début)
 void compactMemory(Block blocks[], int size) {
     int currentIndex = 0;  // Indice de la prochaine position pour un bloc actif
@@ -93,4 +94,5 @@ int main() {
 
     return 0;
 }
+
 
