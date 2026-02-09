@@ -48,7 +48,6 @@ void compactMemory(Block blocks[], int size) {
             currentIndex++;  // Passer à l'emplacement suivant
         }
     }
-
     // Libérer les blocs inutilisés restants
     for (int i = currentIndex; i < size; i++) {
         freeBlock(&blocks[i]);
@@ -94,5 +93,6 @@ int main() {
 
     return 0;
 }
+
 
 
